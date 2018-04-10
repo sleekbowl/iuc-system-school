@@ -1,0 +1,260 @@
+<div class="row animated fadeIn">
+
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfil del usuario</h4>
+                <h6 class="card-subtitle"> nombre usuario </h6>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre de usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input [ngModel]="usuario.nombre" disabled name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Correo de usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [ngModel]="usuario.email" disabled name="email" type="email" class="form-control" placeholder="Correo del usuario" required>
+                            <!-- [disabled]="usuario.google" -->
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                      <i class="fa fa-save"></i>
+                      Guardar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body" align="center">
+                <h4 class="card-title">Fotografía del usuario</h4>
+                <h6 class="card-subtitle"> nombre usuario </h6>
+
+                <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150">
+                <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
+
+                <input (change)="seleccionImage($event.target.files[0])" type="file">
+
+                <br><br>
+
+                <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="btn btn-block btn-success waves-effect waves-light m-r-10">
+                    <i class="fa fa-save"></i>
+                    Actualizar Foto
+                  </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="card-header bg-info">
+    <h4 class="m-b-0 text-white">Datos Personales</h4>
+</div>
+<div class="card card-body">
+    <div class="form-horizontal">
+        <div class="form-body">
+            <h3 class="box-title">Informacion Personal</h3>
+            <hr class="m-t-0 m-b-40">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Nombre:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.nombre }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.nombre" class="form-control" placeholder="Nombre">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Matricula:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.matricula.matricula }} </p>
+                            <input *ngIf="edit" disabled type="text" value="{{ usuario?.matricula.matricula }}" class="form-control" placeholder="Matricula">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Sexo:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.sexo }} </p>
+                            <div *ngIf="edit" class="radio-list">
+                                <label class="custom-control custom-radio">
+                                        <input [(ngModel)]="usuario.sexo" id="radio" name="radio" type="radio" checked="" class="custom-control-input" value="Masculino">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Masculino</span>
+                                    </label>
+                                <label class="custom-control custom-radio">
+                                        <input [(ngModel)]="usuario.sexo" id="radio2" name="radio" type="radio" class="custom-control-input" value="Femenino">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Femenino</span>
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Seguro:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.seguro }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.seguro" class="form-control" placeholder="Seguro">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Fecha de nacimiento:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario?.fechaNacimiento | date: "dd/MM/yyyy" }}</p>
+                            <input *ngIf="edit" type="date" [(ngModel)]="usuario.fechaNacimiento" class="form-control" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Tipo de Sangre:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.tipoSangre }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.tipoSangre" class="form-control" placeholder="Tipo de sangre">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Telefono Personal:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario?.telefonoPersonal }}</p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.telefonoPersonal" class="form-control" placeholder="Telefono Personal">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-4">Telefono Tutor:</label>
+                        <div class="col-md-8">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.telefonoTutor }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.telefonoTutor" class="form-control" placeholder="Telefono Tutor">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <h3 class="box-title">Dirección</h3>
+            <hr class="m-t-0 m-b-40">
+            <div class="row">
+                <div *ngIf="!edit" class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Dirección:</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"> {{usuario.calle}}, {{ usuario.colonia }} </p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="edit" class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Calle:</label>
+                        <div class="col-md-9">
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.calle" class="form-control" placeholder="Calle">
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="edit" class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Colonia:</label>
+                        <div class="col-md-9">
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.colonia" class="form-control" placeholder="Colonia">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Codigo Postal:</label>
+                        <div class="col-md-9">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.cp }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.cp" class="form-control" placeholder="Codigo Postal">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Municipio:</label>
+                        <div class="col-md-9">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.municipio }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.municipio" class="form-control" placeholder="Municipio">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Estado:</label>
+                        <div class="col-md-9">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.estado }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.estado" class="form-control" placeholder="Estado">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="control-label text-right col-md-3">Pais:</label>
+                        <div class="col-md-9">
+                            <p *ngIf="!edit" class="form-control-static"> {{ usuario.pais }} </p>
+                            <input *ngIf="edit" type="text" [(ngModel)]="usuario.pais" class="form-control" placeholder="Pais">
+                        </div>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+        </div>
+        <div class="form-actions">
+            <div class="row">
+                <div class="col-md-6">
+                    <div *ngIf="!edit" class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button (click)="editar()" class="btn btn-danger"> <i class="fa fa-pencil"></i> Editar</button>
+                            <button (click)="cancelar()" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="edit" class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button (click)="actualizarUsuario()" class="btn btn-info"> <i class="mdi mdi-content-save"></i> Guardar</button>
+                            <button (click)="cancelar()" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"> </div>
+            </div>
+        </div>
+    </div>
+</div>

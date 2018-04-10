@@ -1,0 +1,71 @@
+<div class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input #input (keyup)="buscarMatricula( input.value )" type="text" class="form-control" placeholder="Buscar matricula...">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Matriculas registradas ( <small> {{ _matriculaService.totalMatriculas }} </small> )</h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button [routerLink]="['/matricula','nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                    <i class="fa fa-plus"></i> 
+                    Crear Matricula
+                  </button>
+                    </div>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Matricula</th>
+                            <th>Titulo</th>
+                            <th>Role</th>
+                            <th>Enlazado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let matricula of matriculas">
+                            <td>
+                                {{ matricula.matricula }}
+                            </td>
+                            <td>
+                                {{ matricula.titulo }}
+                            </td>
+                            <td>
+                                {{ matricula.role }}
+                            </td>
+                            <td>
+                                <label *ngIf="!matricula.vinculada" class="label label-danger">No vinculada</label>
+                                <label *ngIf="matricula.vinculada" class="label label-info">Vinculada</label>
+                            </td>
+                            <td>
+                                <button [routerLink]="['/matricula', matricula._id ]" class="btn btn-primary">
+                              <i class="fa fa-edit"></i>
+                            </button>
+
+                                <button (click)="borrarMatricula( matricula )" class="btn btn-danger">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
