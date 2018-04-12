@@ -15,13 +15,16 @@ import { LoginGuardGuard } from '../services/service.index';
 import { AdminGuard } from '../services/service.index';
 
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { HospitalesComponent } from './hospitales/hospitales.component';
-import { MedicosComponent } from './medicos/medicos.component';
-import { MedicoComponent } from './medicos/medico.component';
+// import { HospitalesComponent } from './hospitales/hospitales.component';
+// import { MedicosComponent } from './medicos/medicos.component';
+// import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { VerificaTokenGuard } from '../services/guards/verifica-token.guard';
 import { MatriculasComponent } from './matriculas/matriculas.component';
 import { MatriculaComponent } from './matriculas/matricula.component';
+import { CarrerasComponent } from './mantenimiento/carreras/carreras.component';
+import { GruposComponent } from './mantenimiento/grupos/grupos.component';
+import { CalificacionesComponent } from './mantenimiento/calificaciones/calificaciones.component';
 
 
 const pagesRoutes: Routes = [
@@ -45,12 +48,15 @@ const pagesRoutes: Routes = [
         canActivate: [ AdminGuard ],
         data: { titulo: 'Mantenimiento de Usuarios' }
     },
-    { path: 'matriculas', component: MatriculasComponent, canActivate:[ AdminGuard ],  data: { titulo: 'Matriculas' } },    
+    { path: 'matriculas', component: MatriculasComponent, canActivate:[ AdminGuard ],  data: { titulo: 'Mantenimiento de Matriculas' } },    
     { path: 'matricula/:id', component: MatriculaComponent, canActivate:[ AdminGuard ], data: { titulo: 'Actualizar Matricula' } },
-    { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' } },
-    { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de Médicos' } },
-    { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar Médico' } },
+    { path: 'carreras', component: CarrerasComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Carreras' } },
+    { path: 'grupos', component: GruposComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Grupos' } },
+    { path: 'calificaciones', component: CalificacionesComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Calificaciones' } },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+    // { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' } },
+    // { path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de Médicos' } },
+    // { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar Médico' } },
 ];
 
 

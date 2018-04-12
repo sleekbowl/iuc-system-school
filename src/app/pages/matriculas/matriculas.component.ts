@@ -24,7 +24,7 @@ export class MatriculasComponent implements OnInit {
           .subscribe( matriculas => this.matriculas = matriculas );
   }
   
-  buscarMatricula( termino: string ) {
+  buscarMatriculas( termino: string ) {
 
     if ( termino.length <= 0 ) {
       this.cargarMatriculas();

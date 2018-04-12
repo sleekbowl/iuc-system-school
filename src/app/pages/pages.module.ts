@@ -34,6 +34,9 @@ import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { MatriculasComponent } from './matriculas/matriculas.component';
 import { MatriculaComponent } from './matriculas/matricula.component';
+import { CarrerasComponent } from './mantenimiento/carreras/carreras.component';
+import { GruposComponent } from './mantenimiento/grupos/grupos.component';
+import { CalificacionesComponent } from './mantenimiento/calificaciones/calificaciones.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +57,10 @@ import { MatriculaComponent } from './matriculas/matricula.component';
         MedicoComponent,
         BusquedaComponent,
         MatriculasComponent,
-        MatriculaComponent
+        MatriculaComponent,
+        CarrerasComponent,
+        GruposComponent,
+        CalificacionesComponent
     ],
     exports: [
         DashboardComponent,
