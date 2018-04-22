@@ -82,6 +82,7 @@ export class UsuarioService {
     this.usuario.fechaNacimiento = new Date(usuario.fechaNacimiento);
     this.token = token;
     this.menu = menu;
+    console.log(this.usuario);
   }
 
   logout() {

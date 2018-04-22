@@ -37,6 +37,8 @@ import { MatriculaComponent } from './matriculas/matricula.component';
 import { CarrerasComponent } from './mantenimiento/carreras/carreras.component';
 import { GruposComponent } from './mantenimiento/grupos/grupos.component';
 import { CalificacionesComponent } from './mantenimiento/calificaciones/calificaciones.component';
+import { ChatComponent } from './chat/chat.component';
+import { ContactosComponent } from './chat/contactos.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +62,9 @@ import { CalificacionesComponent } from './mantenimiento/calificaciones/califica
         MatriculaComponent,
         CarrerasComponent,
         GruposComponent,
-        CalificacionesComponent
+        CalificacionesComponent,
+        ChatComponent,
+        ContactosComponent
     ],
     exports: [
         DashboardComponent,
