@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarrerasComponent implements OnInit {
 
+  cargando: boolean = true;
+
   constructor() { }
 
   ngOnInit() {

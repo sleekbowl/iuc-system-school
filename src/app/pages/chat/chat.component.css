@@ -36,7 +36,6 @@ chat application Page
 .chat-main-box {
     position: relative;
     overflow: hidden;
-    height: 500px;
 }
 
 .chat-main-box .chat-left-aside {
