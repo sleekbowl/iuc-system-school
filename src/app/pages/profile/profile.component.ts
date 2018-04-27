@@ -5,7 +5,9 @@ import { UsuarioService } from '../../services/service.index';
 //Pipes
 import { DatePipe } from '@angular/common';
 
-const moment = require('moment');
+import * as moment from 'moment';
+
+let momento = moment()
 
 @Component({
   selector: 'app-profile',
