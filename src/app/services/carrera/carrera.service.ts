@@ -7,7 +7,7 @@ import { Hospital } from '../../models/hospital.model';
 import swal from 'sweetalert';
 
 @Injectable()
-export class HospitalService {
+export class CarreraService {
 
   totalCarreras: number = 0;
 
@@ -16,12 +16,12 @@ export class HospitalService {
     public _usuarioService: UsuarioService
   ) { }
 
-  cargarHospitales() {
+  cargarCarreras() {
 
-    let url = URL_SERVICIOS + '/hospital';
+    let url = URL_SERVICIOS + '/carrera';
     return this.http.get( url )
               .map( (resp: any) => {
-                this.totalHospitales = resp.total;
+                this.totalCarreras = resp.total;
                 return resp.hospitales;
               });
 

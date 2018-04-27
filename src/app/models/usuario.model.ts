@@ -15,7 +15,7 @@ export class Usuario {
         public estado? :string,
         public pais? :string,
         public cp?: string,
-        public fechaNacimiento? : Date,
+        public fechaNacimiento? : any,
         public tipoSangre? : string,
         public telefonoPersonal? : string,
         public telefonoTutor? : string,

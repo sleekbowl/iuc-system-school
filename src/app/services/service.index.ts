@@ -9,6 +9,7 @@ export { VerificaTokenGuard } from './guards/verifica-token.guard';
 export { MedicoService } from './medico/medico.service';
 export { HospitalService } from './hospital/hospital.service';
 export { MatriculaService } from './matricula/matricula.service';
+export { CarreraService } from './carrera/carrera.service';
 
 
 

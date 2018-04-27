@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
+
 import {
   SettingsService,
   SidebarService,
@@ -14,7 +15,8 @@ import {
   HospitalService,
   MedicoService,
   VerificaTokenGuard,
-  MatriculaService
+  MatriculaService,
+  CarreraService
  } from './service.index';
 
 
@@ -35,7 +37,8 @@ import {
     HospitalService,
     MedicoService,
     VerificaTokenGuard,
-    MatriculaService
+    MatriculaService,
+    CarreraService
   ],
   declarations: []
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 //Modelos
 import { Carrea } from '../../../models/carrera.model';
+import { CarreraService } from '../../../services/service.index';
 
 @Component({
   selector: 'app-carreras',
@@ -12,10 +13,14 @@ export class CarrerasComponent implements OnInit {
 
   cargando: boolean = true;
   carrera: Carrea;
+  carreraSer
 
-  constructor() { }
+  constructor( public _carreraService: CarreraService ) {
+    
+  }
 
   ngOnInit() {
+    this._carreraService.cargarCarreras();
   }
 
   agregarCarrera( tipo ){
