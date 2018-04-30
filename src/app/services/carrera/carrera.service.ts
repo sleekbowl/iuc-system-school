@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import { UsuarioService } from '../usuario/usuario.service';
-import { Hospital } from '../../models/hospital.model';
+
+import { Carrera } from '../../models/carrera.model';
 
 import swal from 'sweetalert';
 
@@ -22,56 +23,52 @@ export class CarreraService {
     return this.http.get( url )
               .map( (resp: any) => {
                 this.totalCarreras = resp.total;
-                return resp.hospitales;
+                return resp.carreras;
               });
 
   }
 
-  obtenerHospital( id: string ) {
+  obtenerCarrera( id: string ) {
 
-    let url = URL_SERVICIOS + '/hospital/' + id;
+    let url = URL_SERVICIOS + '/carrera/' + id;
     return this.http.get( url )
-                .map( (resp: any) => resp.hospital );
+                .map( (resp: any) => resp.carreras );
 
   }
 
-  borrarHospital( id: string ) {
+  borrarCarrera( id: string ) {
 
-    let url = URL_SERVICIOS + '/hospital/' + id;
+    let url = URL_SERVICIOS + '/carrera/' + id;
     url += '?token=' + this._usuarioService.token;
 
     return this.http.delete( url )
-                .map( resp => swal('Hospital Borrado', 'Eliminado correctamente', 'success') );
+                .map( resp => swal('Carrera Borrada', 'Eliminado correctamente', 'success') );
 
   }
 
-  crearHospital( nombre: string ) {
+  crearCarrera( carrera: Carrera ) {
 
-    let url = URL_SERVICIOS + '/hospital';
+    let url = URL_SERVICIOS + '/carrera';
     url += '?token=' + this._usuarioService.token;
 
-    return this.http.post( url, { nombre } )
-              .map( (resp: any) => resp.hospital );
+    return this.http.post( url, carrera )
+              .map( (resp: any) => {
+                resp.carrera;
+                swal('Carrera creado', carrera.nombre, 'success' );
+              });
 
   }
 
-  buscarHospital( termino: string ) {
-    let url = URL_SERVICIOS + '/busqueda/coleccion/hospitales/' + termino;
-    return this.http.get( url )
-                .map( (resp: any) => resp.hospitales );
+  actualizarCarrera( carrera: any ) {
 
-  }
-
-  actualizarHospital( hospital: Hospital ) {
-
-    let url = URL_SERVICIOS + '/hospital/' + hospital._id;
+    let url = URL_SERVICIOS + '/carrera/' + carrera._id;
     url += '?token=' + this._usuarioService.token;
 
-    return this.http.put( url, hospital )
+    return this.http.put( url, carrera )
               .map( (resp: any) => {
 
-                swal('Hospital Actualiado', hospital.nombre, 'success');
-                return resp.hospital;
+                swal('Carrera Actualiada', carrera.nombre, 'success');
+                return resp.carrera;
               });
 
   }
