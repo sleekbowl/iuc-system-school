@@ -10,78 +10,81 @@
     </div>
 </div>
 
-<div class="row animated fadeIn" *ngIf="cargando">
-
-    <div class="col-sm-12">
-
-        <div class="alert alert-warning text-center">
-            <strong>Cargando</strong>
-            <br>
-            <i class="fa fa-refresh fa-spin fa-2x"></i>
-            <br>
-            <span>Espere por favor</span>
-        </div>
-    </div>
-</div>
-
-
-<div class="row animated fadeIn" *ngIf="!cargando">
+<div class="row animated fadeIn">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">Grupos registrados ( <small>{{ totalRegistros }}</small> )</h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button [routerLink]="['/grupo','nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                    <i class="fa fa-plus"></i> Crear Grupo </button>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
 
-                <h3 class="card-title">Grupos registrados ( <small>{{ totalRegistros }}</small> )</h3>
+                    <div *ngIf="nothing" class="col-md-6 text-center alert alert-success">No existe ninguna carrera. </div>
+                </div>
+                <div class="row animated fadeIn" *ngIf="cargando">
 
+                    <div class="col-sm-12">
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Carrera</th>
-                            <th>Auth</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                        <div class="alert alert-warning text-center">
+                            <strong>Cargando</strong>
+                            <br>
+                            <i class="fa fa-refresh fa-spin fa-2x"></i>
+                            <br>
+                            <span>Espere por favor</span>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!cargando && !nothing">
 
-                    <tbody>
-                        <tr *ngFor="let grupo of grupos">
-                            <td class="w70">
-                                <img (click)="mostrarModal( grupo._id )" [src]="grupo.img | imagen" class="img-50 img-circle pointer">
-                            </td>
-                            <td>
-                                {{ grupo.nombre }}
-                            </td>
-                            <td>{{ grupo.tipo }}</td>
-                            <td>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Carrera</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-                                {{ grupo.carrera }}
-                            </td>
-                            <td>
-                                <button (click)="guardarUsuario( usuario )" class="btn btn-primary">
-                                <i class="fa fa-save"></i>
-                              </button>
+                        <tbody>
+                            <tr *ngFor="let grupo of grupos">
+                                <td class="w70">
+                                    <img (click)="mostrarModal( grupo._id )" [src]="grupo.img | imagen" class="img-50 img-circle pointer">
+                                </td>
+                                <td>
+                                    {{ grupo.nombre }}
+                                </td>
+                                <td>{{ grupo.tipo }}</td>
+                                <td>
 
-                                <button (click)="borrarUsuario( usuario )" class="btn btn-danger">
-                                  <i class="fa fa-trash-o"></i>
-                                </button>
-                            </td>
-                        </tr>
+                                    {{ grupo.carrera }}
+                                </td>
+                                <td>
+                                    <button (click)="direccionarGrupo( grupo._id )" class="btn btn-info">
+                                    <i class="mdi mdi-tooltip-edit"></i>
+                                  </button>
+                                </td>
+                            </tr>
 
-                    </tbody>
+                        </tbody>
 
-                </table>
+                    </table>
 
-                <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
-                  Anteriores
-                </button>
+                    <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
+                      Anteriores
+                    </button>
 
-                <button (click)="cambiarDesde(5)" class="btn btn-secondary">
-                    Siguientes
-                </button>
-
-
+                    <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+                        Siguientes
+                    </button>
+                </div>
 
             </div>
         </div>

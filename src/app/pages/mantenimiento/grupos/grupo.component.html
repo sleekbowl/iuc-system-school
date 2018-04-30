@@ -1,0 +1,79 @@
+<div class="row animated fadeIn">
+
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Grupo: {{ grupo.nombre }}</h3>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #f="ngForm" ngNativeValidate (ngSubmit)="guardarGrupo(f)">
+                        <div class="form-group">
+                            <label>Nombre de la matricula</label>
+                            <input [(ngModel)]="grupo.nombre" name="grupo" type="text" class="form-control" placeholder="Nombre del grupo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select [(ngModel)]="grupo.tipo" name="Tipo" class="form-control" required>
+                            <option value="">Seleccione el tipo</option>
+                            <option *ngFor="let tipo of tipos" [value]="tipo">
+                              {{ tipo }}
+                            </option>
+                          </select>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Año</label>
+                            <input [(ngModel)]="grupo.year" name="year" type="text" class="form-control" placeholder="Año" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Carrera</label>
+                            <select (change)="cambioCarrera( $event.target.value )" name="carrera" class="form-control" required>
+                            <option value="">Seleccione Carrera</option>
+                            <option *ngFor="let carrera of carreras; let i = index" [value]="carrera._id">
+                              {{ carrera.nombre }}
+                            </option>
+                          </select>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Guardar
+                      </button>
+                        <a routerLink="/grupos" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div *ngIf="empy">
+            <div class="card card-body">
+                <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+
+    <!-- <div class="col-md-3">
+      <div class="card card-body">
+          <h4 class="box-title m-b-0">Hospital</h4>
+
+          <img [src]="hospital.img | imagen:'hospital'" class="rounded img-fluid">
+      </div>
+  </div>
+
+  <div class="col-md-3" *ngIf="medico._id">
+      <div class="card card-body">
+          <h4 class="box-title m-b-0">Fotografía</h4>
+
+          <img (click)="cambiarFoto()" [src]="medico.img | imagen:'medico'" class="img-circle img-fluid pointer">
+      </div>
+  </div> -->
+
+</div>

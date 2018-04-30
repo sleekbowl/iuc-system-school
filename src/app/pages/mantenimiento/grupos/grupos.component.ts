@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalUploadService } from '../../../components/modal-upload/modal-upload.service';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import { GrupoService } from '../../../services/grupo/grupo.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
+declare var swal: any;
 
 @Component({
   selector: 'app-grupos',
@@ -12,11 +17,15 @@ export class GruposComponent implements OnInit {
   desde: number = 0;
   totalRegistros: number = 0;
   grupos: any;
+  nothing:boolean = true;
 
   constructor(
-    public _modalUploadService: ModalUploadService
+    public _modalUploadService: ModalUploadService,
+    public _usuarioService: UsuarioService,
+    public _grupoService: GrupoService,
+    public router: Router,
   ) {
-
+    this.cargarGrupos();
   }
 
   ngOnInit() {
@@ -30,17 +39,18 @@ export class GruposComponent implements OnInit {
     this._modalUploadService.mostrarModal( 'usuarios', id );
   }
 
-  cargarUsuarios() {
+  cargarGrupos( ) {
 
-    this.cargando = true;
-
-    this._usuarioService.cargarUsuarios( this.desde )
+    this._grupoService.cargarGrupos( this.desde )
               .subscribe( (resp: any) => {
-
                 this.totalRegistros = resp.total;
-                this.usuarios = resp.usuarios;
+                this.grupos = resp.grupos;
                 this.cargando = false;
-
+                if( this.totalRegistros === 0 ){
+                  this.nothing = true;
+                }else{
+                  this.nothing = false;
+                }
               });
 
   }
@@ -58,7 +68,7 @@ export class GruposComponent implements OnInit {
     }
 
     this.desde += valor;
-    this.cargarUsuarios();
+    this.cargarGrupos( );
 
   }
 
@@ -109,11 +119,8 @@ export class GruposComponent implements OnInit {
 
   }
 
-  guardarUsuario( usuario: Usuario ) {
-
-    this._usuarioService.actualizarUsuario( usuario )
-            .subscribe();
-
+  direccionarGrupo( id: string ) {
+    this.router.navigate(['/grupo', id ]);
   }
 
 }

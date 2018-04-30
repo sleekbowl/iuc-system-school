@@ -24,6 +24,7 @@ import { MatriculasComponent } from './matriculas/matriculas.component';
 import { MatriculaComponent } from './matriculas/matricula.component';
 import { CarrerasComponent } from './mantenimiento/carreras/carreras.component';
 import { GruposComponent } from './mantenimiento/grupos/grupos.component';
+import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
 import { CalificacionesComponent } from './mantenimiento/calificaciones/calificaciones.component';
 import { ChatComponent } from './chat/chat.component';
 import { ContactosComponent } from './chat/contactos.component';
@@ -54,7 +55,9 @@ const pagesRoutes: Routes = [
     { path: 'matricula/:id', component: MatriculaComponent, canActivate:[ AdminGuard ], data: { titulo: 'Actualizar Matricula' } },
     { path: 'carreras', component: CarrerasComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Carreras' } },
     { path: 'grupos', component: GruposComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Grupos' } },
+    { path: 'grupo/:id', component: GrupoComponent, canActivate:[ AdminGuard ], data: { titulo: 'Crear Grupo' } },
     { path: 'calificaciones', component: CalificacionesComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Calificaciones' } },
+    //Chat
     { path: 'chat', component: ChatComponent, canActivate:[ VerificaTokenGuard ], data: { titulo: 'Chat Principal' } },    
     { path: 'contactos', component: ContactosComponent, canActivate:[ VerificaTokenGuard ], data: { titulo: 'Contactos' } },    
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }

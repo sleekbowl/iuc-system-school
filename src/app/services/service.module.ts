@@ -16,7 +16,8 @@ import {
   MedicoService,
   VerificaTokenGuard,
   MatriculaService,
-  CarreraService
+  CarreraService,
+  GrupoService
  } from './service.index';
 
 
@@ -38,7 +39,8 @@ import {
     MedicoService,
     VerificaTokenGuard,
     MatriculaService,
-    CarreraService
+    CarreraService,
+    GrupoService
   ],
   declarations: []
 })

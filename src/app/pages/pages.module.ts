@@ -45,6 +45,7 @@ import { ContactosComponent } from './chat/contactos.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
@@ -73,7 +74,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         GruposComponent,
         CalificacionesComponent,
         ChatComponent,
-        ContactosComponent
+        ContactosComponent,
+        GrupoComponent
     ],
     exports: [
         DashboardComponent,
