@@ -3,6 +3,7 @@ import { ModalUploadService } from '../../../components/modal-upload/modal-uploa
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { GrupoService } from '../../../services/grupo/grupo.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Grupo } from '../../../models/grupo.model';
 
 declare var swal: any;
 
@@ -16,8 +17,12 @@ export class GruposComponent implements OnInit {
   cargando: boolean = true;
   desde: number = 0;
   totalRegistros: number = 0;
-  grupos: any;
+  grupos: Grupo[];
+  tipoBusqueda = ['Año','Carrera','Tipo'];
+  vBusqueda:string = "";
   nothing:boolean = true;
+  busqueda:boolean = false;
+  found:any;
 
   constructor(
     public _modalUploadService: ModalUploadService,
@@ -72,34 +77,55 @@ export class GruposComponent implements OnInit {
 
   }
 
-  buscarUsuario( termino: string ) {
+  buscarGrupo( termino: string ) {
 
     if ( termino.length <= 0 ) {
-      this.cargarUsuarios();
+      this.cargarGrupos();
+      this.busqueda = false;
       return;
     }
 
     this.cargando = true;
 
-    this._usuarioService.buscarUsuarios( termino )
-            .subscribe( (usuarios: Usuario[]) => {
-
-              this.usuarios = usuarios;
+    this._grupoService.buscarGrupos( termino )
+            .subscribe( (data: any) => {
+              this.grupos = data.grupos;
+              console.log(this.grupos);
               this.cargando = false;
+              this.busqueda = true;
             });
 
   }
 
-  borrarUsuario( usuario: Usuario ) {
+  buscarGrupoInterno( termino:string ){
 
-    if ( usuario._id === this._usuarioService.usuario._id ) {
-      swal('No puede borrar usuario', 'No se puede borrar a si mismo', 'error');
+    var resultado: number;
+
+    if ( termino.length <= 0 ) {
+      this.cargarGrupos();
       return;
     }
 
+    this.cargando = true;
+    if( this.vBusqueda === 'Año' ){
+      console.log("La variable busqueda es AÑO y el termino se cambio a Entero")
+      var terminoNumber:number = parseInt(termino);
+    }
+    for (let i = 0; i < this.grupos.length; i++) {
+      if( this.grupos[i].year === terminoNumber ){
+        resultado = i;
+        this.grupos = this.grupos[resultado];
+        return
+      }
+    }
+  }
+
+  borrarGrupo( grupo: Grupo ) {
+
+
     swal({
       title: '¿Esta seguro?',
-      text: 'Esta a punto de borrar a ' + usuario.nombre,
+      text: 'Esta a punto de borrar a ' + grupo.nombre,
       icon: 'warning',
       buttons: true,
       dangerMode: true,
@@ -108,9 +134,9 @@ export class GruposComponent implements OnInit {
 
       if (borrar) {
 
-        this._usuarioService.borrarUsuario( usuario._id )
+        this._grupoService.borrarGrupo( grupo._id )
                   .subscribe( borrado => {
-                      this.cargarUsuarios();
+                      this.cargarGrupos();
                   });
 
       }

@@ -4,7 +4,7 @@ export class Grupo {
         public nombre: string,
         public tipo: string,        
         public year: number,
-        public carrera:string,
+        public carrera:any,
         public alumnos?: any,
         public img?: string,
         public _id?: string

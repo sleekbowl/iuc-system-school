@@ -2,9 +2,32 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="col-md-12">
+                    <input #input (keyup)="buscarGrupo( input.value )" type="text" class="form-control" placeholder="Buscar grupo...">
+                </div>
+                <div *ngIf="busqueda">
+                    <div class="col-md-12 text-center">
+                        <h4>Filtro de busqueda</h4>
+                    </div>
+                    <div class="row col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input #input (keyup)="buscarGrupoInterno( input.value )" type="text" class="form-control" placeholder="Buscar ...">
+                            </div>
+                            <div class="col-md-4">
+                                <select [(ngModel)]="vBusqueda" name="Tipo" class="form-control" required>
+                                        <option value="">Seleccione...</option>>
+                                        <option *ngFor="let tipo of tipoBusqueda" [value]="tipo">
+                                        {{ tipo }}
+                                        </option>
+                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
 
-                <input #input (keyup)="buscarCarrera( input.value )" type="text" class="form-control" placeholder="Buscar carrera...">
-
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +71,7 @@
                                 <th>Imagen</th>
                                 <th>Nombre</th>
                                 <th>Tipo</th>
+                                <th>Año</th>
                                 <th>Carrera</th>
                                 <th></th>
                             </tr>
@@ -62,9 +86,10 @@
                                     {{ grupo.nombre }}
                                 </td>
                                 <td>{{ grupo.tipo }}</td>
+                                <td>{{ grupo.year }}</td>
                                 <td>
 
-                                    {{ grupo.carrera }}
+                                    {{ grupo.carrera.nombre }}
                                 </td>
                                 <td>
                                     <button (click)="direccionarGrupo( grupo._id )" class="btn btn-info">

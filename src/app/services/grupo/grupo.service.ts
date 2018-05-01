@@ -92,11 +92,15 @@ export class GrupoService {
 
   }
 
-  buscarUsuarios( termino: string ) {
+  buscarGrupos( termino: string ) {
 
     let url = URL_SERVICIOS + '/busqueda/coleccion/grupos/' + termino;
     return this.http.get( url )
-                .map( (resp: any) => resp.usuarios );
+                // .map( (resp: any) => {
+                //   resp.grupos;
+                //   console.log("Desde el servicio");
+                //   console.log(resp)
+                // });
 
   }
 
