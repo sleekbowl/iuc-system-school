@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Grupo } from '../../../models/grupo.model';
 
 declare var swal: any;
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-grupos',
@@ -15,13 +16,18 @@ declare var swal: any;
 export class GruposComponent implements OnInit {
 
   cargando: boolean = true;
+  nothing:boolean = true;
+  busqueda:boolean = false;
+  selec:boolean = false;
   desde: number = 0;
   totalRegistros: number = 0;
   grupos: Grupo[];
+  // Variables de busqueda
   tipoBusqueda = ['Año','Carrera','Tipo'];
+  years = [];
+  tipo = ['Semestre', 'Cuatrimeste'];
+  carreras = [];
   vBusqueda:string = "";
-  nothing:boolean = true;
-  busqueda:boolean = false;
   found:any;
 
   constructor(
@@ -31,13 +37,36 @@ export class GruposComponent implements OnInit {
     public router: Router,
   ) {
     this.cargarGrupos();
+    // Obtenemos el año actual y creamos una matriz con los 8 años descendientes
+    this.years[0] = moment().get('year');        
+    for (let index = 1; index < 8; index++) {
+      this.years[index] = this.years[index - 1] - 1;
+    }
   }
 
   ngOnInit() {
   }
   
-  buscarCarrera( value: string ){
-
+  cambioBusqueda( event ){
+    switch (event) {
+      case 'Año':
+        this.vBusqueda = "Año";
+        this.selec = true;
+        break;
+      case 'Carrera':
+      this.vBusqueda = "Carrera";
+      this.selec = true;
+        break;
+      case 'Tipo':
+      this.vBusqueda = "Tipo";
+      this.selec = true;      
+        break;
+      default:
+        break;
+    }
+  }
+  cambioYear( event ){
+    console.log( event );
   }
   
   mostrarModal( id: string ) {
@@ -112,9 +141,11 @@ export class GruposComponent implements OnInit {
       var terminoNumber:number = parseInt(termino);
     }
     for (let i = 0; i < this.grupos.length; i++) {
-      if( this.grupos[i].year === terminoNumber ){
+      if( this.grupos[i].year == terminoNumber ){
         resultado = i;
-        this.grupos = this.grupos[resultado];
+        this.found = this.grupos[resultado];
+        this.grupos = [this.found];
+        this.cargando = false;
         return
       }
     }

@@ -11,11 +11,19 @@
                     </div>
                     <div class="row col-md-6">
                         <div class="row">
-                            <div class="col-md-8">
-                                <input #input (keyup)="buscarGrupoInterno( input.value )" type="text" class="form-control" placeholder="Buscar ...">
+                            <div class="col-md-7" *ngIf="!selec">
+                                <input type="text" class="form-control" value="Seleccione tipo de Busqueda" disabled>
                             </div>
-                            <div class="col-md-4">
-                                <select [(ngModel)]="vBusqueda" name="Tipo" class="form-control" required>
+                            <div class="col-md-7" *ngIf="vBusqueda === 'Año'">
+                                <select (change)="cambioYear( $event.target.value )" name="year" class="form-control" required>
+                                            <option value="">Seleccione el año</option>
+                                            <option *ngFor="let year of years" [value]="year">
+                                            {{ year }}
+                                            </option>
+                                     </select>
+                            </div>
+                            <div class="col-md-5">
+                                <select (change)="cambioBusqueda( $event.target.value )" name="Tipo" class="form-control" required>
                                         <option value="">Seleccione...</option>>
                                         <option *ngFor="let tipo of tipoBusqueda" [value]="tipo">
                                         {{ tipo }}
