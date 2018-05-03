@@ -118,4 +118,25 @@ export class GrupoService {
 
   }
 
+  buscarUsuario( nombre:string ){
+    let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + nombre;
+    return this.http.get( url )
+                    .map( (resp:any) => resp.usuarios );
+  }
+
+  vincularAlumno( alumno:string, idGrupo ){
+    let url = URL_SERVICIOS + '/grupo/' + idGrupo;
+    url += '?token=' + this._usuarioService.token;
+    console.log( alumno );
+    return this.http.put( url, alumno )
+                .map( (resp: any) => {
+                  swal('Alumno vinculado', 'success' );
+                  return resp;
+                })
+                .catch( err => {
+                  swal( err.error.mensaje,  'error' );
+                  return Observable.throw( err );
+                });
+  }
+
 }

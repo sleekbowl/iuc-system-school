@@ -4,6 +4,7 @@ import { Grupo } from '../../../models/grupo.model';
 import { GrupoService, UsuarioService, CarreraService } from '../../../services/service.index';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoginComponent } from '../../../login/login.component';
 
 @Component({
   selector: 'app-grupo',
@@ -19,10 +20,12 @@ export class GrupoComponent implements OnInit {
   id = "";
   usuario:any;
   empy:boolean = true;
+  vinc = new Array();
+  search : boolean = false;
 
   constructor(
     public _grupoService: GrupoService,
-    public _usuariolaService: UsuarioService,
+    public _usuarioService: UsuarioService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public _carreraService: CarreraService
@@ -90,6 +93,23 @@ export class GrupoComponent implements OnInit {
 
   cambioCarrera( value:string ){
     this.grupo.carrera =  value
+  }
+
+  vinculador( value ){
+    if ( value.length <= 0 ) {
+      this.search = false;
+      return;
+    }
+    this._grupoService.buscarUsuario( value ).subscribe( data => {
+      this.vinc = data;
+      this.search = true;
+    });
+  }
+
+  vincularAlumno( alumno:string ){
+    this._grupoService.vincularAlumno( alumno, this.grupo._id ).subscribe( data =>{
+      console.log(data);
+    });
   }
 
 }

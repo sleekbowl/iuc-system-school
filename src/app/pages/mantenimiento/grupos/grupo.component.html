@@ -48,12 +48,46 @@
             </div>
         </div>
     </div>
-    <div class="card card-body">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h3>Alumnos vinculados: </h3><small> {{grupo.alumnos}} </small>
-                <div *ngIf="empy">
-                    <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
+    <div class="col-md-6">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Alumnos vinculados: </h3><small> {{grupo.alumnos}} </small>
+                    <div *ngIf="empy">
+                        <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <h4>Buscador de alumnos:</h4>
+                </div>
+                <div class="col-md-12">
+                    <input (keyup)="vinculador( $event.target.value )" class="form-control" type="text" placeholder="Buscar..">
+                </div>
+                <div class="col-md-12">
+                    <table *ngIf="search" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let alumno of vinc">
+                                <td>
+                                    {{ alumno.nombre }}
+                                </td>
+                                <td>
+                                    <button (click)="vincularAlumno( alumno._id )" class="btn btn-info">
+                                        <i class="mdi mdi-source-fork"></i>
+                                      </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
                 </div>
             </div>
         </div>
