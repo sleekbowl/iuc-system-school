@@ -28,7 +28,6 @@ export class GruposComponent implements OnInit {
   tipo = ['Semestre', 'Cuatrimeste'];
   carreras = [];
   vBusqueda:string = "";
-  found:any;
 
   constructor(
     public _modalUploadService: ModalUploadService,
@@ -65,8 +64,23 @@ export class GruposComponent implements OnInit {
         break;
     }
   }
-  cambioYear( event ){
-    console.log( event );
+  cambioYear( termino ){
+    let busqueda = new Array;
+    busqueda = [];
+    this.cargando = true;
+    var terminoNumber:number = parseInt(termino);
+    console.log(terminoNumber);
+    for (let i = 0; i < this.grupos.length; i++) {
+      if( this.grupos[i].year == terminoNumber ){
+        busqueda.push(this.grupos[i]);
+      }
+    }
+    console.log(busqueda);
+    this.grupos = busqueda;
+    this.cargando = false;
+    if ( this.grupos.length === 0 ) {
+      this.nothing = true;
+    }
   }
   
   mostrarModal( id: string ) {
@@ -90,7 +104,6 @@ export class GruposComponent implements OnInit {
   }
 
   cambiarDesde( valor: number ) {
-
     let desde = this.desde + valor;
 
     if ( desde >= this.totalRegistros ) {
@@ -128,8 +141,6 @@ export class GruposComponent implements OnInit {
 
   buscarGrupoInterno( termino:string ){
 
-    var resultado: number;
-
     if ( termino.length <= 0 ) {
       this.cargarGrupos();
       return;
@@ -137,18 +148,15 @@ export class GruposComponent implements OnInit {
 
     this.cargando = true;
     if( this.vBusqueda === 'Año' ){
-      console.log("La variable busqueda es AÑO y el termino se cambio a Entero")
       var terminoNumber:number = parseInt(termino);
     }
     for (let i = 0; i < this.grupos.length; i++) {
       if( this.grupos[i].year == terminoNumber ){
-        resultado = i;
-        this.found = this.grupos[resultado];
-        this.grupos = [this.found];
-        this.cargando = false;
+        this.grupos = [this.grupos[i]];
         return
       }
     }
+    this.cargando = false;
   }
 
   borrarGrupo( grupo: Grupo ) {

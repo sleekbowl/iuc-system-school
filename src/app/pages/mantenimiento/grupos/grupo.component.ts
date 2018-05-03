@@ -47,7 +47,7 @@ export class GrupoComponent implements OnInit {
           .subscribe( grupo => {
             this.grupo = grupo;
             console.log(this.grupo);
-            if( this.grupo.alumnos[0] === null ){
+            if( this.grupo.alumnos.length === 0){
               this.empy = true;
             }else{
               this.empy = false;

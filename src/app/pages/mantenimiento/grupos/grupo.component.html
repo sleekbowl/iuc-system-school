@@ -48,15 +48,14 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-6">
-        <div *ngIf="empy">
-            <div class="card card-body">
-                <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
-            </div>
-        </div>
+    <div class="card card-body">
         <div class="row">
-
+            <div class="col-md-12 text-center">
+                <h3>Alumnos vinculados: </h3><small> {{grupo.alumnos}} </small>
+                <div *ngIf="empy">
+                    <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
+                </div>
+            </div>
         </div>
     </div>
 
