@@ -49,51 +49,76 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card card-body">
+        <div class="card card-body pointer" data-toggle="modal" data-target="#modalAlumnos">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h3>Alumnos vinculados: </h3><small> {{grupo.alumnos}} </small>
+                    <h3>Alumnos vinculados: <small> {{totalAlumnos}} </small></h3>
+                    <div class="row col-md-12 text-center">
+
+                    </div>
                     <div *ngIf="empy">
                         <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="card card-body">
+            <div class="row">
                 <div class="col-md-12 text-center">
-                    <h4>Buscador de alumnos:</h4>
-                </div>
-                <div class="col-md-12">
-                    <input (keyup)="vinculador( $event.target.value )" class="form-control" type="text" placeholder="Buscar..">
-                </div>
-                <div class="col-md-12">
-                    <table *ngIf="search" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th></th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            <tr *ngFor="let alumno of vinc">
-                                <td>
-                                    {{ alumno.nombre }}
-                                </td>
-                                <td>
-                                    <button (click)="vincularAlumno( alumno._id )" class="btn btn-info">
+                    <div *ngIf="empy">
+                        <h3 class="box-title m-b-0 alert alert-warning">El grupo aun no tiene alumnos</h3>
+                    </div>
+                    <div class="row animated fadeIn" *ngIf="!empy && search">
+
+                        <div class="col-sm-12">
+
+                            <div class="alert alert-warning text-center">
+                                <strong>Cargando</strong>
+                                <br>
+                                <i class="fa fa-refresh fa-spin fa-2x"></i>
+                                <br>
+                                <span>Espere por favor</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h4>Buscador de alumnos:</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <input (keyup)="vinculador( $event.target.value )" class="form-control" type="text" placeholder="Buscar..">
+                    </div>
+                    <div class="col-md-12">
+                        <table *ngIf="searchAlum" class="table table-hover text-center">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Vincular</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let alumno of vinc">
+                                    <td>
+                                        {{ alumno.nombre }}
+                                    </td>
+                                    <td>
+                                        <button (click)="vincularAlumno( alumno._id )" class="btn btn-info">
                                         <i class="mdi mdi-source-fork"></i>
                                       </button>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
-                        </tbody>
+                            </tbody>
 
-                    </table>
+                        </table>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- <div class="col-md-3">
+        <!-- <div class="col-md-3">
       <div class="card card-body">
           <h4 class="box-title m-b-0">Hospital</h4>
 
@@ -109,4 +134,56 @@
       </div>
   </div> -->
 
+    </div>
 </div>
+<!-- sample modal content -->
+<div class="modal fade" id="modalAlumnos" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Visor de alumnos vinculados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <perfect-scrollbar style="max-height: 400px;">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Imagen</th>
+                                        <th>Nombre</th>
+                                        <th>Desvincular</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let alumno of grupo.alumnos">
+                                        <td class="w70">
+                                            <img [src]="alumno.img | imagen" class="img-50 img-circle pointer">
+                                        </td>
+                                        <td>{{ alumno.nombre }}</td>
+                                        <td>
+                                            <button class="btn btn-primary">
+                                                        <i class="fa fa-save"></i>
+                                                      </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button data-dismiss="modal" type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->

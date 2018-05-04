@@ -10,6 +10,7 @@ export { HospitalService } from './hospital/hospital.service';
 export { MatriculaService } from './matricula/matricula.service';
 export { CarreraService } from './carrera/carrera.service';
 export { GrupoService } from './grupo/grupo.service';
+export { ChatService } from './chat/chat.service';
 
 
 

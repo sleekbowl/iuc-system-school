@@ -17,7 +17,8 @@ import {
   VerificaTokenGuard,
   MatriculaService,
   CarreraService,
-  GrupoService
+  GrupoService,
+  ChatService
  } from './service.index';
 
 
@@ -40,7 +41,8 @@ import {
     VerificaTokenGuard,
     MatriculaService,
     CarreraService,
-    GrupoService
+    GrupoService,
+    ChatService
   ],
   declarations: []
 })

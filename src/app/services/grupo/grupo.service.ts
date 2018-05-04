@@ -124,14 +124,15 @@ export class GrupoService {
                     .map( (resp:any) => resp.usuarios );
   }
 
+
   vincularAlumno( alumno:string, idGrupo ){
     let url = URL_SERVICIOS + '/grupo/' + idGrupo;
     url += '?token=' + this._usuarioService.token;
     console.log( alumno );
-    return this.http.put( url, alumno )
+    return this.http.put( url, {alumno} )
                 .map( (resp: any) => {
                   swal('Alumno vinculado', 'success' );
-                  return resp;
+                  return resp.grupo;
                 })
                 .catch( err => {
                   swal( err.error.mensaje,  'error' );

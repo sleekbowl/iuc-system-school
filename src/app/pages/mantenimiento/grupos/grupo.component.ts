@@ -21,7 +21,9 @@ export class GrupoComponent implements OnInit {
   usuario:any;
   empy:boolean = true;
   vinc = new Array();
-  search : boolean = false;
+  searchAlum : boolean = false;
+  search : boolean = true;
+  totalAlumnos: number = 0;
 
   constructor(
     public _grupoService: GrupoService,
@@ -49,13 +51,14 @@ export class GrupoComponent implements OnInit {
     this._grupoService.cargarGrupo( id )
           .subscribe( grupo => {
             this.grupo = grupo;
+            this.totalAlumnos = grupo.alumnos.length;
             console.log(this.grupo);
             if( this.grupo.alumnos.length === 0){
               this.empy = true;
             }else{
               this.empy = false;
             }
-            console.log(this.empy);
+            this.cargarAlumnos();
           });
   }
 
@@ -96,20 +99,31 @@ export class GrupoComponent implements OnInit {
   }
 
   vinculador( value ){
+    console.log(value);
     if ( value.length <= 0 ) {
-      this.search = false;
+      this.searchAlum = false;
       return;
     }
     this._grupoService.buscarUsuario( value ).subscribe( data => {
       this.vinc = data;
-      this.search = true;
+      this.searchAlum = true;
     });
   }
 
   vincularAlumno( alumno:string ){
     this._grupoService.vincularAlumno( alumno, this.grupo._id ).subscribe( data =>{
-      console.log(data);
+      this.cargarGrupo( this.id );      
     });
   }
 
+  cargarAlumnos( ){
+    let help = new Array();
+    for (let index = 0; index < this.grupo.alumnos.length; index++) {
+      this._usuarioService.cargarUsuario( this.grupo.alumnos[index] ).subscribe( alumnos => {
+        help.push(alumnos);
+        this.grupo.alumnos = help;
+      });
+    }
+    this.search = false;
+  }
 }

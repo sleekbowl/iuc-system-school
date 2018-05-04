@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-declare var $ :any;
+import { ChatService } from '../../services/service.index';
 
 @Component({
   selector: 'app-chat',
@@ -9,7 +8,7 @@ declare var $ :any;
 })
 export class ChatComponent implements OnInit {
 
-  constructor() {
+  constructor( public _chatService: ChatService ) {
     
   }
 
