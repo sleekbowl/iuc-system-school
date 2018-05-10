@@ -19,7 +19,31 @@
                         </div>
                         <perfect-scrollbar style="max-height: 400px;">
 
-                            <ul class="chatonline style-none ">
+                            <div class="row animated fadeIn" *ngIf="search">
+
+                                <div class="col-sm-12">
+
+                                    <div class="alert alert-warning text-center">
+                                        <strong>Cargando</strong>
+                                        <br>
+                                        <i class="fa fa-refresh fa-spin fa-2x"></i>
+                                        <br>
+                                        <span>Espere por favor</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-info" *ngIf="conversationsEmpty">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                                <h3 class="text-info"><i class="fa fa-exclamation-circle"></i> Hola</h3> Aun no inicias una conversacion, inicia una y diviertete
+                            </div>
+
+                            <ul class="chatonline style-none " *ngIf="!search && !searchContac">
+                                <li *ngFor="let conversation of conversations">
+                                    <a (click)="cargarConversation( conversation._id )" href="javascript:void(0)"><img [src]="conversation.img | imagen" alt="user-img" class="img-circle"> <span>{{ conversation.nombre }} <small class="text-success">online</small></span></a>
+                                </li>
+                                <li class="p-20"></li>
+                            </ul>
+                            <ul class="chatonline style-none " *ngIf="!search && searchContac">
                                 <li *ngFor="let contacto of contactos">
                                     <a (click)="cargarConversation( contacto._id )" href="javascript:void(0)"><img [src]="contacto.img | imagen" alt="user-img" class="img-circle"> <span>{{ contacto.nombre }} <small class="text-success">online</small></span></a>
                                 </li>

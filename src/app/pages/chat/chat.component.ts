@@ -3,6 +3,10 @@ import { ChatService, UsuarioService } from '../../services/service.index';
 import { URL_SERVICIOS } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 
 @Component({
   selector: 'app-chat',
@@ -11,28 +15,38 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ChatComponent implements OnInit {
 
+  conversations = new Array;
   contactos = new Array;
+
+  conversationsEmpty: boolean = false;
+  search:boolean = true;
+  searchContac: boolean = false;
 
   constructor( 
     public _chatService: ChatService, public _usuarioService: UsuarioService,
     public http:HttpClient
    ) {
-     this.cargarContactos();
+     this.cargarConversations();
   }
 
   ngOnInit() {
   }
   
-  cargarContactos(){
-    this._usuarioService.cargarUsuarios().subscribe( resp => {
-      console.log(resp);
-      this.contactos = resp['usuarios'];
-    });
+  cargarConversations(){
+    this._chatService.cargarConversacion().subscribe(data =>{
+      this.search = false;
+      this.conversations = data;
+      if( this.conversations === null ){
+        this.conversationsEmpty = true;
+      }else{
+        
+      }
+    })
   }
 
   buscarContacto( nombre:string ){
     if( nombre.length === 0 ){
-      this.cargarContactos();
+      this.searchContac = false;
     }
     console.log(nombre);
     let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + nombre;
@@ -40,7 +54,8 @@ export class ChatComponent implements OnInit {
     this.http.get( url )
         .subscribe( (resp: any) => {
           this.contactos = resp.usuarios;
-          console.log(resp);
+          this.conversationsEmpty = false;
+          this.searchContac = true;
         });
   }
 
