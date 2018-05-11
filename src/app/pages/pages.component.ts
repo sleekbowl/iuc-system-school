@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../services/service.index';
 
 declare function init_plugins();
 
@@ -9,7 +10,11 @@ declare function init_plugins();
 })
 export class PagesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public _chatService: ChatService
+  ) {
+    console.log("Aqui es el global de la aplicacion")
+  }
 
   ngOnInit() {
     init_plugins();
