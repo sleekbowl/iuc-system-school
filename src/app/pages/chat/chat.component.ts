@@ -33,4 +33,9 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  cargarPrueba(){
+    console.log("Prueba desde aqui");
+    this._chatService.cargarConversations();
+  }
+
 }

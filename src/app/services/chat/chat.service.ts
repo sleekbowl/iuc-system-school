@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client'
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
 import { UsuarioService } from '../usuario/usuario.service';
 
@@ -9,11 +9,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Usuario } from '../../models/usuario.model';
 
+
 @Injectable()
 export class ChatService {
 
   public socket = io('http://localhost:3000');
-  public conversations = new Array;
+  public conversations:any = new Array;
   public conversationFull:any;
   public contactos = new Array;
   public toUser:string = "";
@@ -30,20 +31,20 @@ export class ChatService {
     this.cargarConversations();
   };
 
-
   cargarConversations(){
-    let url = URL_SERVICIOS + '/chat/user/'+ this._usuarioService.usuario._id ;
-    return this.http.get( url ).subscribe( (resp:any) =>{
+    let id  = this._usuarioService.usuario._id;
+    let url = URL_SERVICIOS + '/chat/user';
+    return this.http.post( url, {identificacion:id}).subscribe( (resp:any) =>{
       this.conversations = resp.conversations;
-      console.log(resp);
+      console.log(this.conversations);
       this.search = false;
       if( this.conversations.length === 0 ){
         this.conversationsEmpty = true;
       }else{
         
       }
-    })
-  }
+    });
+  };
 
   cargarConversation( id:string ){
     this.receptor = id;
@@ -60,21 +61,22 @@ export class ChatService {
   }
 
   busquedaConversation( idBusqueda: string ){
-    this.toUser = idBusqueda;
-    if(this.conversations.length === 0){
-      this.newConversation = true;
-      this.cargarConversation( idBusqueda );
-    }
-    for (let i = 0; i < this.conversations.length; i++) {
-      let count:number = this.conversations[i].participants.length; 
-      for (let j = 0; j < count; j++) {    
-        if( this.conversations[i].participants[j] === idBusqueda){
-          this.newConversation = false;
-          this.cargarConversation( this.conversations[i]._id );
-          return;
-        }  
-      }
-    }
+    console.log(idBusqueda);
+    // this.toUser = idBusqueda;
+    // if(this.conversations.length === 0){
+    //   this.newConversation = true;
+    //   this.cargarConversation( idBusqueda );
+    // }
+    // for (let i = 0; i < this.conversations.length; i++) {
+    //   let count:number = this.conversations[i].participants.length; 
+    //   for (let j = 0; j < count; j++) {    
+    //     if( this.conversations[i].participants[j] === idBusqueda){
+    //       this.newConversation = false;
+    //       this.cargarConversation( this.conversations[i]._id );
+    //       return;
+    //     }  
+    //   }
+    // }
   }
 
   buscarContacto( nombre:string ){

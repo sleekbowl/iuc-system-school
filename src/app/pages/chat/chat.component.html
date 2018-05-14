@@ -40,7 +40,9 @@
 
                             <ul class="chatonline style-none " *ngIf="!_chatService.search && !_chatService.searchContac">
                                 <li *ngFor="let conversation of _chatService.conversations">
-                                    <a (click)="_chatService.busquedaConversation( conversation._id )" href="javascript:void(0)"><img [src]="conversation.img | imagen" alt="user-img" class="img-circle"> <span>{{ conversation.nombre }} <small class="text-success">online</small></span></a>
+                                    <a *ngFor="let chat of _chatService.conversations.participantsId" (click)="_chatService.busquedaConversation( conversation._id )" href="javascript:void(0)">
+                                        <img [src]="chat.img | imagen" alt="user-img" class="img-circle"> <span>{{ chat.nombre }} <small class="text-success">online</small></span>
+                                    </a>
                                 </li>
                                 <li class="p-20"></li>
                             </ul>
@@ -83,7 +85,7 @@
                                 <textarea [(ngModel)]="mensaje" #sendMensaje (keyup)="detecEnter( $event.code )" placeholder="Escriba su mensaje aqui" class="form-control b-0"></textarea>
                             </div>
                             <div class="col-4 text-right">
-                                <button type="button" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
+                                <button (click)="this._chatService.cargarConversations()" type="button" class="btn btn-info btn-circle btn-lg"><i class="fa fa-paper-plane-o"></i> </button>
                             </div>
                         </div>
                     </div>
