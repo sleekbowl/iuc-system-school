@@ -32,7 +32,7 @@ export class ChatService {
 
 
   cargarConversations(){
-    let url = URL_SERVICIOS + '/chat/found/' + this._usuarioService.usuario._id;
+    let url = URL_SERVICIOS + '/chat/user/'+ this._usuarioService.usuario._id ;
     return this.http.get( url ).subscribe( (resp:any) =>{
       this.conversations = resp.conversations;
       console.log(resp);
