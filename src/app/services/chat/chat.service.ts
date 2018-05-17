@@ -36,6 +36,7 @@ export class ChatService {
     this.join();
     this.nuevoUsuarioIngresado();
     this.usuarioDesconectado();
+    this.mensajeRecibido();
   };
 
   join(){
@@ -44,44 +45,28 @@ export class ChatService {
     this.socket.emit('join', data);
   }
 
+  left(){
+    this.socket.emit('leave', {user:this._usuarioService.usuario._id});
+  }
+
   nuevoUsuarioIngresado(){
     let observable = new Observable<{user:string}>(observer =>{
       this.socket.on('joined', (data)=>{
         observer.next(data);
       })
       return () => {this.socket.disconnect()}
-    }).subscribe(data => {
-      console.log("Este usuario se acaba de conectar:"+data.user);
-      for (let i = 0; i < this.conversations.length; i++) {
-        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
-          if( this.conversations[i].participantsId[j]._id === data.user ){
-            this.conversations[i]['online'] = true;
-            console.log("Se encontro en tu base de datos el usuario");
-            return;
-          } 
-        }
-      }
-    });
+    })
+    return observable;
   }
 
   usuarioDesconectado(){
     let observable = new Observable<{user:string}>(observer =>{
-      this.socket.on('left', (data)=>{
+      this.socket.on('leave all', (data)=>{
         observer.next(data);
       })
       return () => {this.socket.disconnect()}
-    }).subscribe(data => {
-      console.log("Este usuario se acaba de conectar:"+data.user);
-      for (let i = 0; i < this.conversations.length; i++) {
-        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
-          if( this.conversations[i].participantsId[j]._id === data.user ){
-            this.conversations[i]['online'] = false;
-            console.log("Se encontro en tu base de datos el usuario y se desconecto");
-            return;
-          } 
-        }
-      }
-    });
+    })
+    return observable;
   }
 
   cargarConversations( idUsuario:string ){
@@ -107,6 +92,10 @@ export class ChatService {
     return this.http.get( url );
   }
 
+  conectarSala( sala:string ){
+    this.socket.emit('entrar', {conversationId:sala});
+  }
+
   enviarMensaje( body:string, idConversation:string, usuarioId:string, nombre:string ){
 
     let mensaje: Mensaje = new Mensaje(idConversation,body,usuarioId,nombre);
@@ -121,6 +110,9 @@ export class ChatService {
     let url = URL_SERVICIOS + '/chat/sendMensaje';
         return this.http.post( url, {mensaje})
   }
+  enviarMensajeSocket( sala:string, nombre:string, img:string,mensaje:string, hora:string ){
+    this.socket.emit('message', {sala:sala ,nombre:nombre, img : img, mensaje:mensaje, hora:hora});
+  }
 
   mensajeRecibido(){
     let observable = new Observable<{user:String, img:String, mensaje:string, hora:string}>(observer=>{
@@ -129,7 +121,7 @@ export class ChatService {
       });
       return () => {this.socket.disconnect();}
   });
-
+  
   return observable;
   }
 

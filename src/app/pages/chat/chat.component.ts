@@ -28,7 +28,6 @@ export class ChatComponent implements OnInit {
 
   elemento: any;
 
-  public socket = io('http://localhost:3000');
   public conversations:any = new Array;
   public conversationFull:any = new Array;
   public idConversation: string = "";
@@ -50,10 +49,48 @@ export class ChatComponent implements OnInit {
     public http:HttpClient 
    ) {
      this.cargarConversations();
-     this._chatService.mensajeRecibido().subscribe(data => {
-      console.log("Un nuevo usuario envio un mensaje");
-      console.log(data);
+     this._chatService.mensajeRecibido().subscribe(data=>{
+      let nuevoMensaje = new Object;
+      nuevoMensaje = {
+        author:{
+          nombre:data.user,
+          img:data.img
+        },
+        body:data.mensaje,
+        send: moment( data.hora ).hour()+":"+moment( data.hora ).minute()
+      };
+      this.conversationFull.push(nuevoMensaje);
+      setTimeout( ()=>{
+        this.elemento.scrollTop = this.elemento.scrollHeight;
+      },20);
     });
+    this._chatService.nuevoUsuarioIngresado()
+    .subscribe(data => {
+      for (let i = 0; i < this.conversations.length; i++) {
+        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
+          if( this.conversations[i].participantsId[j]._id === data.user ){
+            this.conversations[i]['online'] = true;
+            console.log("Se encontro en tu base de datos el usuario");
+            return;
+          } 
+        }
+      }
+    });
+    this._chatService.usuarioDesconectado()
+    .subscribe(data => {
+      for (let i = 0; i < this.conversations.length; i++) {
+        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
+          if( this.conversations[i].participantsId[j]._id === data.user ){
+            this.conversations[i]['online'] = false;
+            return;
+          } 
+        }
+      }
+    });
+    //  this._chatService.mensajeRecibido().subscribe(data => {
+    //   console.log("Un nuevo usuario envio un mensaje");
+    //   console.log(data);
+    // });
   }
   
   ngOnInit() {
@@ -84,11 +121,11 @@ export class ChatComponent implements OnInit {
         this.selection = true;
       }else{
         for (let index = 0; index < this.conversationFull.length; index++) {
-          this.conversationFull[index].send = moment( this.conversationFull[index].createdAt ).hour()+":"+moment( this.conversationFull[index].createdAt ).minute()
+          this.conversationFull[index].send = moment( this.conversationFull[index].createdAt ).hour()+":"+moment( this.conversationFull[index].createdAt ).minute();
         }
         this.selection = true;
         this.idConversation = idBusqueda;
-        this.socket.emit('inside', {conversationId:this.idConversation});
+        this._chatService.conectarSala( idBusqueda );
         this.newConversation = false;
       }
       setTimeout( ()=>{
@@ -138,6 +175,7 @@ export class ChatComponent implements OnInit {
   }
 
   enviarMensaje( body:string ){
+    let nuevoMensaje:any;
     if( this.selection === false ){
       console.error("Favor de seleccionar una conversacion o contacto");
     }else{
@@ -147,15 +185,15 @@ export class ChatComponent implements OnInit {
         this._chatService.nuevaConversacion(this.receptor,body,this._usuarioService.usuario._id)
         .subscribe( (resp:any) => {
           idNewConversation = resp.idConversation;
-          console.log(resp);
-          this.socket.emit('inside', {idConversation:resp.idConversation});
+          this._chatService.conectarSala( resp.idConversation );
         });
       }else{
         console.log("Conversacion iniciada");
         this._chatService.enviarMensaje(body, this.idConversation,this._usuarioService.usuario._id,this._usuarioService.usuario.nombre)
         .subscribe((data:any) =>{
           console.log(data);
-          this.socket.emit('message', {sala:this.idConversation ,nombre: data.nombre, img : this._usuarioService.usuario.img, mensaje: data.mensaje.body, hora: data.mensaje.createdAt});
+          //Enviar mensaje a socket
+          this._chatService.enviarMensajeSocket( data.mensaje.conversationId, data.nombre, this._usuarioService.usuario.img, data.mensaje.body, data.mensaje.createdAt );
         });
       }
     }
