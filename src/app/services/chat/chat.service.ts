@@ -9,113 +9,138 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Usuario } from '../../models/usuario.model';
 
+import * as moment from 'moment';
+import { Mensaje } from '../../models/mensaje.model';
+let momento = moment()
+
 
 @Injectable()
 export class ChatService {
 
   public socket = io('http://localhost:3000');
   public conversations:any = new Array;
-  public conversationFull:any;
-  public contactos = new Array;
-  public toUser:string = "";
-  public conversationsEmpty: boolean = false;
-  public search:boolean = true;
-  public searchContac: boolean = false;
-  public newConversation: boolean = false;
-  public selection: boolean = false;
+  // public conversationFull:any = new Array;
+  public idConversation: string = "";
+  // public contactos = new Array;
+  // public toUser:string = "";
+  // public conversationsEmpty: boolean = false;
+  // public search:boolean = true;
+  // public searchContac: boolean = false;
+  // public newConversation: boolean = false;
+  // public selection: boolean = false;
   public receptor:string = "";
 
   constructor(
     public _usuarioService: UsuarioService, public http: HttpClient
   ) {
-    this.cargarConversations();
+    this.join();
+    this.nuevoUsuarioIngresado();
+    this.usuarioDesconectado();
   };
 
-  cargarConversations(){
-    let id  = this._usuarioService.usuario._id;
-    let url = URL_SERVICIOS + '/chat/user';
-    return this.http.post( url, {identificacion:id}).subscribe( (resp:any) =>{
-      this.conversations = resp.conversations;
-      console.log(this.conversations);
-      this.search = false;
-      if( this.conversations.length === 0 ){
-        this.conversationsEmpty = true;
-      }else{
-        
+  join(){
+    let data: Object = new Object;
+    data['user'] = this._usuarioService.usuario._id;
+    this.socket.emit('join', data);
+  }
+
+  nuevoUsuarioIngresado(){
+    let observable = new Observable<{user:string}>(observer =>{
+      this.socket.on('joined', (data)=>{
+        observer.next(data);
+      })
+      return () => {this.socket.disconnect()}
+    }).subscribe(data => {
+      console.log("Este usuario se acaba de conectar:"+data.user);
+      for (let i = 0; i < this.conversations.length; i++) {
+        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
+          if( this.conversations[i].participantsId[j]._id === data.user ){
+            this.conversations[i]['online'] = true;
+            console.log("Se encontro en tu base de datos el usuario");
+            return;
+          } 
+        }
       }
     });
+  }
+
+  usuarioDesconectado(){
+    let observable = new Observable<{user:string}>(observer =>{
+      this.socket.on('left', (data)=>{
+        observer.next(data);
+      })
+      return () => {this.socket.disconnect()}
+    }).subscribe(data => {
+      console.log("Este usuario se acaba de conectar:"+data.user);
+      for (let i = 0; i < this.conversations.length; i++) {
+        for (let j = 0; j < this.conversations[i].participantsId.length; j++) {
+          if( this.conversations[i].participantsId[j]._id === data.user ){
+            this.conversations[i]['online'] = false;
+            console.log("Se encontro en tu base de datos el usuario y se desconecto");
+            return;
+          } 
+        }
+      }
+    });
+  }
+
+  cargarConversations( idUsuario:string ){
+    // let id  = this._usuarioService.usuario._id;
+    let url = URL_SERVICIOS + '/chat/user';
+    return this.http.post( url, {identificacion:idUsuario});
   };
 
-  cargarConversation( id:string ){
-    this.receptor = id;
-    let url = URL_SERVICIOS + '/chat/conversation/' + id;
-    return this.http.get( url ).subscribe( (resp:any) =>{
-      this.conversationFull = resp.conversation;
-      console.log("Conversacion full");
-      console.log( this.conversationFull );
-      if( this.conversationFull.length === 0 ){
-        this.newConversation = true;
-      }
-      this.selection = true;
-    })
+  busquedaConversationContac( id:string ){
+    let url = URL_SERVICIOS + '/chat/user';
+    return this.http.post( url,{identificacion:id} );
   }
 
   busquedaConversation( idBusqueda: string ){
-    console.log(idBusqueda);
-    // this.toUser = idBusqueda;
-    // if(this.conversations.length === 0){
-    //   this.newConversation = true;
-    //   this.cargarConversation( idBusqueda );
-    // }
-    // for (let i = 0; i < this.conversations.length; i++) {
-    //   let count:number = this.conversations[i].participants.length; 
-    //   for (let j = 0; j < count; j++) {    
-    //     if( this.conversations[i].participants[j] === idBusqueda){
-    //       this.newConversation = false;
-    //       this.cargarConversation( this.conversations[i]._id );
-    //       return;
-    //     }  
-    //   }
-    // }
+    let url = URL_SERVICIOS + '/chat/conversation/' + idBusqueda;
+
+    return this.http.get( url );
   }
 
   buscarContacto( nombre:string ){
-    if( nombre.length === 0 ){
-      this.searchContac = false;
-      if( this.conversations.length === 0 ){
-        this.conversationsEmpty = true;
-      }
-    }
-    console.log(nombre);
     let url = URL_SERVICIOS + '/busqueda/coleccion/usuarios/' + nombre;
 
-    this.http.get( url )
-        .subscribe( (resp: any) => {
-          this.contactos = resp.usuarios;
-          this.conversationsEmpty = false;
-          this.searchContac = true;
-        });
+    return this.http.get( url );
   }
 
-  enviarMensaje( mensaje:string ){
+  enviarMensaje( body:string, idConversation:string, usuarioId:string, nombre:string ){
+
+    let mensaje: Mensaje = new Mensaje(idConversation,body,usuarioId,nombre);
     let receptor:string = this.receptor;
     let user = this._usuarioService.usuario._id;
-    if( this.selection === false ){
-      console.error("Favor de seleccionar una conversacion o contacto");
-    }else{
-      if( this.newConversation === true ){
-        console.log("Este es el mensaje: "+mensaje)
-        console.log("Este es el usuario que lo envio: "+user);
-        console.log("Este es el receptor: "+receptor);
-        let url = URL_SERVICIOS + '/chat/conversation/'+receptor;
+    let data: Object = new Object();
+    data['user'] = this._usuarioService.usuario.nombre;
+    data['img'] = this._usuarioService.usuario.img;
+    data['mensaje'] = body;
+    data['conversationId'] = this.idConversation;
 
-        this.http.post( url, {mensaje, user} ).subscribe( (resp:any) => {
-          console.log(resp);
-        });
-      }else{
-        console.log("Se va a enviar el mensaje: "+mensaje)
-      }
-    }
+    let url = URL_SERVICIOS + '/chat/sendMensaje';
+        return this.http.post( url, {mensaje})
+  }
+
+  mensajeRecibido(){
+    let observable = new Observable<{user:String, img:String, mensaje:string, hora:string}>(observer=>{
+      this.socket.on('new message', (data)=>{
+          observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+  });
+
+  return observable;
+  }
+
+  nuevaConversacion( receptor:string, mensaje:string, userId:string ){
+    let url = URL_SERVICIOS + '/chat/conversation/'+receptor;
+        return this.http.post( url, {mensaje: mensaje, user:userId} )
+        // .subscribe( (resp:any) => {
+        //   idNewConversation = resp.idConversation;
+        //   console.log(resp);
+
+        // });
   }
 
 }
