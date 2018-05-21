@@ -50,6 +50,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
 
+
+//Graficas
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+
+
 @NgModule({
     declarations: [
         // PagesComponent,
@@ -89,7 +94,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FormsModule,
         ChartsModule,
         PipesModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        NgxChartsModule
     ],
     providers: [
         {
