@@ -46,9 +46,13 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
+import { PagesAlumnosModule } from './pagesAlumnos/pagesAlumnos.module';
+import { PagesMaestrosModule } from './pagesMaestros/pagesMaestros.module';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
+
+//Paginas para estudiantes
 
 @NgModule({
     declarations: [
@@ -89,7 +93,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         FormsModule,
         ChartsModule,
         PipesModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        PagesAlumnosModule,
+        PagesMaestrosModule
     ],
     providers: [
         {

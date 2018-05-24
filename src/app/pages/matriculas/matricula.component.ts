@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { Matricula } from '../../models/matricula.model';
-import { MatriculaService, UsuarioService } from '../../services/service.index';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Matricula } from '../../models/matricula.model';
+import { MatriculaService, UsuarioService } from '../../services/service.index';
 
 @Component({
   selector: 'app-matricula',
@@ -14,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class MatriculaComponent implements OnInit {
 
   matricula: any = new Matricula('', '', '', '', null); 
-  tipos = ['Maestro','Alumno','Administrativo'];
+  tipos = ['Maestro','Alumno','Administrativo','Staff'];
   roles = ['MAESTRO_ROLE', 'ALUMNO_ROLE', 'ADMIN_ROLE'];
   titulos = ['Lic. en Ing. en Sistemas Computacionales','Lic. en Contabilidad','Lic. en Gastronomia']
   tipo:boolean = false;
@@ -86,14 +85,17 @@ export class MatriculaComponent implements OnInit {
     switch (tipo) {
       case 'Maestro':
         this.tipo = true;
+        this.matricula.role = "MAESTRO_ROLE";
         break;
     
       case 'Alumno':
         this.tipo = false;
+        this.matricula.role = "ALUMNO_ROLE";
         break;
 
       case 'Administrativo':
         this.tipo = true;
+        this.matricula.role = "ADMIN_ROLE";
         break;
     }
   }

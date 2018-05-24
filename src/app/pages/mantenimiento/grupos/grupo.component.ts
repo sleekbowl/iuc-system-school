@@ -6,6 +6,10 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoginComponent } from '../../../login/login.component';
 
+
+//Crear PDF
+import * as jsPDF from 'jspdf'
+
 @Component({
   selector: 'app-grupo',
   templateUrl: './grupo.component.html',
@@ -126,4 +130,17 @@ export class GrupoComponent implements OnInit {
     }
     this.search = false;
   }
+
+download() {
+
+        var doc = new jsPDF();
+        doc.text(20, 20, 'Adrian Putooo!!!');
+        doc.text(20, 30, 'Si ves esto es porque eres una perra!.');
+        doc.addPage();
+        doc.text(20, 20, 'Te gusta lo que ves perra?');
+
+        // Save the PDF
+        doc.save('Test.pdf');
+    }
+
 }
