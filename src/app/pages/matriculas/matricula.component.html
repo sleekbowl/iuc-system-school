@@ -11,7 +11,7 @@
                             <input [(ngModel)]="matricula.matricula" name="matricula" type="text" class="form-control" placeholder="Nombre de la matricula" required>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Permisos</label>
                             <select (change)="cambioMatricula( $event.target.value )" [(ngModel)]="matricula.role" name="rol" class="form-control" required>
                             <option value="">Seleccione el tipo</option>
@@ -20,11 +20,11 @@
                             </option>
                           </select>
 
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <label>Tipo</label>
-                            <select (change)="cambioTipo( $event.target.value )" [(ngModel)]="matricula.tipo" name="Tipo" class="form-control" required>
+                            <select [(ngModel)]="matricula.tipo" name="Tipo" (change)="cambioTipo( $event.target.value )" class="form-control" required>
                             <option value="">Seleccione el tipo</option>
                             <option *ngFor="let tipo of tipos" [value]="tipo">
                               {{ tipo }}

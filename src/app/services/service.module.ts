@@ -18,7 +18,9 @@ import {
   MatriculaService,
   CarreraService,
   GrupoService,
-  ChatService
+  ChatService,
+  StudentGuard,
+  TeacherGuard
  } from './service.index';
 
 
@@ -42,7 +44,9 @@ import {
     MatriculaService,
     CarreraService,
     GrupoService,
-    ChatService
+    ChatService,
+    StudentGuard,
+    TeacherGuard
   ],
   declarations: []
 })

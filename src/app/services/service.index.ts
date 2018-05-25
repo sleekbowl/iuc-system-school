@@ -1,6 +1,8 @@
 // Guards
 export { LoginGuardGuard } from './guards/login-guard.guard';
 export { AdminGuard } from './guards/admin.guard';
+export { StudentGuard } from './guards/student.guard';
+export { TeacherGuard } from './guards/teacher.guard';
 export { VerificaTokenGuard } from './guards/verifica-token.guard';
 
 
