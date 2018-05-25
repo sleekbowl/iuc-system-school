@@ -47,24 +47,18 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
-<<<<<<< HEAD
 import { MateriasComponent } from './mantenimiento/materias/materias.component';
-=======
 import { PagesAlumnosModule } from './pagesAlumnos/pagesAlumnos.module';
 import { PagesMaestrosModule } from './pagesMaestros/pagesMaestros.module';
->>>>>>> c2a2215d3002f7e6dc012ea7d1c4f939251464fb
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
 
-<<<<<<< HEAD
 //Paginas para estudiantes
-=======
 
 //Graficas
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
->>>>>>> graficas
 
 @NgModule({
     declarations: [
@@ -107,12 +101,9 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         ChartsModule,
         PipesModule,
         PerfectScrollbarModule,
-<<<<<<< HEAD
         PagesAlumnosModule,
         PagesMaestrosModule
-=======
         NgxChartsModule
->>>>>>> graficas
     ],
     providers: [
         {
