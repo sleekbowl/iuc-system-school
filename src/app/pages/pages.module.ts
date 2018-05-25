@@ -102,7 +102,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         PipesModule,
         PerfectScrollbarModule,
         PagesAlumnosModule,
-        PagesMaestrosModule
+        PagesMaestrosModule,
         NgxChartsModule
     ],
     providers: [
