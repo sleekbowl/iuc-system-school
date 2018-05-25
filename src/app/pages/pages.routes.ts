@@ -28,6 +28,7 @@ import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
 import { CalificacionesComponent } from './mantenimiento/calificaciones/calificaciones.component';
 import { ChatComponent } from './chat/chat.component';
 import { ContactosComponent } from './chat/contactos.component';
+import { MateriasComponent } from './mantenimiento/materias/materias.component';
 
 
 const pagesRoutes: Routes = [
@@ -56,7 +57,7 @@ const pagesRoutes: Routes = [
     { path: 'carreras', component: CarrerasComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Carreras' } },
     { path: 'grupos', component: GruposComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Grupos' } },
     { path: 'grupo/:id', component: GrupoComponent, canActivate:[ AdminGuard ], data: { titulo: 'Crear Grupo' } },
-    { path: 'calificaciones', component: CalificacionesComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Calificaciones' } },
+    { path: 'materias', component: MateriasComponent, canActivate:[ AdminGuard ], data: { titulo: 'Mantenimiento de Materia' } },
     //Chat
     { path: 'chat', component: ChatComponent, canActivate:[ VerificaTokenGuard ], data: { titulo: 'Chat Principal' } },    
     { path: 'contactos', component: ContactosComponent, canActivate:[ VerificaTokenGuard ], data: { titulo: 'Contactos' } },    
