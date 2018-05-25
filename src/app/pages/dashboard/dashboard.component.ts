@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PieGridComponent } from '@swimlane/ngx-charts';
-import { POINT_CONVERSION_UNCOMPRESSED } from 'constants';
 
 
 @Component({

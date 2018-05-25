@@ -52,14 +52,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
 
-<<<<<<< HEAD
 //Paginas para estudiantes
-=======
 
 //Graficas
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
->>>>>>> graficas
 
 @NgModule({
     declarations: [
@@ -101,12 +98,9 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         ChartsModule,
         PipesModule,
         PerfectScrollbarModule,
-<<<<<<< HEAD
         PagesAlumnosModule,
-        PagesMaestrosModule
-=======
+        PagesMaestrosModule,
         NgxChartsModule
->>>>>>> graficas
     ],
     providers: [
         {
