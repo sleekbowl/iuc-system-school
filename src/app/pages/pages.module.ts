@@ -40,26 +40,25 @@ import { CalificacionesComponent } from './mantenimiento/calificaciones/califica
 import { ChatComponent } from './chat/chat.component';
 import { ContactosComponent } from './chat/contactos.component';
 
+
 //Perfec Scrollball
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { GrupoComponent } from './mantenimiento/grupos/grupo.component';
+import { MateriasComponent } from './mantenimiento/materias/materias.component';
 import { PagesAlumnosModule } from './pagesAlumnos/pagesAlumnos.module';
 import { PagesMaestrosModule } from './pagesMaestros/pagesMaestros.module';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
   };
 
-<<<<<<< HEAD
 //Paginas para estudiantes
-=======
 
 //Graficas
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 
->>>>>>> graficas
 
 @NgModule({
     declarations: [
@@ -86,7 +85,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         CalificacionesComponent,
         ChatComponent,
         ContactosComponent,
-        GrupoComponent
+        GrupoComponent,
+        MateriasComponent
     ],
     exports: [
         DashboardComponent,
@@ -101,12 +101,9 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
         ChartsModule,
         PipesModule,
         PerfectScrollbarModule,
-<<<<<<< HEAD
         PagesAlumnosModule,
-        PagesMaestrosModule
-=======
+        PagesMaestrosModule,
         NgxChartsModule
->>>>>>> graficas
     ],
     providers: [
         {
