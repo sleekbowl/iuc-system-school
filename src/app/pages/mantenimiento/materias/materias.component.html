@@ -8,20 +8,38 @@
                     <form>
                         <div class="form-group">
                             <label>Buscar Grupo:</label>
-                            <input [(ngModel)]="grupoSelec" #grupo (keyup)="buscarGrupo( grupo.value )" name="grupo" type="text" class="form-control" placeholder="Grupo.." required>
+                            <div class="input-group mb-3">
+                                <input [(ngModel)]="grupoSelec" [disabled]="inputGrupo" #grupo (keyup)="buscarGrupo( grupo.value )" name="grupo" type="text" class="form-control" placeholder="Grupo.." required>
+                                <div *ngIf="inputGrupo" class="input-group-append">
+                                    <span class="input-group-text">
+                                            <button (click)="borrarGrupo()" type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                                        <i class="mdi mdi-delete-forever"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label>Asignar Materia</label>
-                            <input name="materia" type="text" class="form-control" placeholder="Nombre de Materia" required>
+                            <input [(ngModel)]="materiaSelec" name="materia" type="text" class="form-control" placeholder="Nombre de Materia" required>
                         </div>
 
                         <div class="form-group">
                             <label>Asignar Catedratico</label>
-                            <input [(ngModel)]="maestroSelec" #catedratico (keyup)="buscarCatedratico( catedratico.value )" name="materia" type="text" class="form-control" placeholder="Nombre del Catedratico" required>
+                            <div class="input-group mb-3">
+                                <input [(ngModel)]="maestroSelec" [disabled]="inputMaestro" #catedratico (keyup)="buscarCatedratico( catedratico.value )" name="catedratico" type="text" class="form-control" placeholder="Nombre del Catedratico" required>
+                                <div *ngIf="inputMaestro" class="input-group-append">
+                                    <span class="input-group-text">
+                                                <button (click)="borrarMaestro()" type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                                            <i class="mdi mdi-delete-forever"></i>
+                                            </button>
+                                        </span>
+                                </div>
+                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                        <button (click)="pregurdado()" type="submit" class="btn btn-success waves-effect waves-light m-r-10">
                           <i class="fa fa-save"></i>
                           Guardar
                         </button>
@@ -62,7 +80,7 @@
                         <h3 class="box-title m-b-0 alert alert-warning">Busque un Grupo</h3>
                     </div>
                     <div *ngIf="busquedaSS">
-                        <h3 class="box-title m-b-0 alert alert-warning">Grupo Seleccionado</h3>
+                        <h3 class="box-title m-b-0 alert alert-warning">{{ grupoSelec }} Seleccionado</h3>
                     </div>
                 </div>
                 <div *ngIf="buscarcatedratico" class="col-md-12">
@@ -89,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="!cateBus">
-                                    <h3 class="box-title m-b-0 alert alert-warning">Catedratico ha sido seleccioando</h3>
+                                    <h3 class="box-title m-b-0 alert alert-warning">{{ maestroSelec }} ha sido seleccioando</h3>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +120,37 @@
         </div>
 
     </div>
+</div>
+<div class="row">
+    <div *ngIf="guardado" class=" col-md-12 card card-body">
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Grupo</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col">Catedratico</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <tr *ngFor="let mat of materia; let i = index" (click)="seleccionarGrupo(i)">
+                        <th>{{ mat.grupo }}</th>
+                        <td>{{ mat.materia }}</td>
+                        <td>{{ mat.maestro }}</td>
+                        <td>
+                            <button (click)="borrarMateria( i )" class="btn btn-danger">
+                                <i class="mdi mdi-delete-forever"></i>
+                            </button>
+                            <button (click)="borrarMateria( i )" class="btn btn-danger">
+                                    <i class="mdi mdi-delete-forever"></i>
+                            </button>
+                        </td>
+                    </tr>
 
-
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
