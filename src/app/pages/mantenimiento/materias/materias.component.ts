@@ -145,6 +145,7 @@ export class MateriasComponent implements OnInit {
             this.busquedaSS = false;
             this.cateBus = true;
             this.inputGrupo = false;
+            this.inputMaestro = false;
             this.buscarcatedratico = false;
             break;
        
