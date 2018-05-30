@@ -60,7 +60,21 @@ export class LoginComponent implements OnInit {
       let token = googleUser.getAuthResponse().id_token;
 
       this._usuarioService.loginGoogle( token )
-              .subscribe( () => {});
+              .subscribe( (data) => {
+                console.log("Todo bn aqui");
+                console.log(data)
+                switch (data.matricula.role) {
+                  case 'ADMIN_ROLE':
+                    window.location.href = '#/dashboard';
+                    break;
+                  case 'ALUMNO_ROLE':
+                  window.location.href = '#/dashboardS';
+                    break
+                  case 'MAESTRO_ROLE':
+                    window.location.href = '#/dashboardT';
+                    break;
+                }
+              });
 
     });
 
@@ -76,7 +90,19 @@ export class LoginComponent implements OnInit {
     let usuario = new Usuario(null, forma.value.email, forma.value.password );
 
     this._usuarioService.login( usuario, forma.value.recuerdame )
-                  .subscribe( correcto => this.router.navigate(['/dashboard'])  );
+                  .subscribe( correcto => {
+                    switch (correcto.matricula.role) {
+                      case 'ADMIN_ROLE':
+                        window.location.href = '#/dashboard';
+                        break;
+                      case 'ALUMNO_ROLE':
+                      window.location.href = '#/dashboardS';
+                        break
+                      case 'MAESTRO_ROLE':
+                        window.location.href = '#/dashboardT';
+                        break;
+                    }
+                  });
 
     // this.router.navigate([ '/dashboard' ]);
 

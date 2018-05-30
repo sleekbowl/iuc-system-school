@@ -108,8 +108,7 @@ export class UsuarioService {
                     return true;
                   }else{
                     this.guardarStorage( resp.id, resp.token, resp.usuario, resp.menu );
-                    window.location.href = '#/dashboard';
-                    return true;
+                    return resp.usuario;
                   }
                   
                 });
@@ -148,7 +147,7 @@ export class UsuarioService {
     return this.http.post( url, usuario )
                 .map( (resp: any) => {
                   this.guardarStorage( resp.id, resp.token, resp.usuario, resp.menu );
-                  return true;
+                  return resp.usuario;
                 })
                 .catch( err => {
 
