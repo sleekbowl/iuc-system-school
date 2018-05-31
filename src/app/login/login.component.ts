@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
                         break;
                       case 'ALUMNO_ROLE':
                       window.location.href = '#/dashboardS';
-                        break
+                        break;
                       case 'MAESTRO_ROLE':
                         window.location.href = '#/dashboardT';
                         break;

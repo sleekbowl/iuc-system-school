@@ -124,35 +124,35 @@ export class MateriasComponent implements OnInit {
       this.grupoSelec = "";
       this.inputGrupo = false;
     }else{
-      swal("Si borra el grupo perdera todo lo que ha ingresado", {
-        buttons: {
-          cancel: "Cancelar",
-          catch: {
-            text: "Borrar",
-            value: "catch",
-          },
-        },
-      })
-      .then((value) => {
-        switch (value) {
+      // swal("Si borra el grupo perdera todo lo que ha ingresado", {
+      //   buttons: {
+      //     cancel: "Cancelar",
+      //     catch: {
+      //       text: "Borrar",
+      //       value: "catch",
+      //     },
+      //   },
+      // })
+      // .then((value) => {
+      //   switch (value) {
       
-          case "catch":
-            this.materia = [];
-            this.guardado = false;
-            this.grupoSelec = "";
-            this.maestroSelec = "";
-            this.materiaSelec = "";
-            this.busquedaSS = false;
-            this.cateBus = true;
-            this.inputGrupo = false;
-            this.inputMaestro = false;
-            this.buscarcatedratico = false;
-            break;
+      //     case "catch":
+      //       this.materia = [];
+      //       this.guardado = false;
+      //       this.grupoSelec = "";
+      //       this.maestroSelec = "";
+      //       this.materiaSelec = "";
+      //       this.busquedaSS = false;
+      //       this.cateBus = true;
+      //       this.inputGrupo = false;
+      //       this.inputMaestro = false;
+      //       this.buscarcatedratico = false;
+      //       break;
        
-          default:
-            break;
-        }
-      });
+      //     default:
+      //       break;
+      //   }
+      // });
     }
   }
   borrarMaestro(){

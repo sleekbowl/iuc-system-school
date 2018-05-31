@@ -11,7 +11,7 @@ import { ExamenesComponent } from './portafolio/examenes/examenes.component';
 
 const pagesRoutes: Routes = [
     { path: 'dashboardS', component: DashboardComponent, canActivate:[ StudentGuard ], data: { titulo: 'Principal' } },
-    { path: 'calificaciones', component: CalificacionesComponent, canActivate:[ StudentGuard ], data: { titulo: 'Calificaciones' } }
+    { path: 'calificaciones', component: CalificacionesComponent, canActivate:[ StudentGuard ], data: { titulo: 'Calificaciones' } },
     { path: 'eventosS', component: EventosComponent, canActivate:[ StudentGuard ], data: { titulo: 'Calificaciones' } },
     { path: 'examenesS', component: ExamenesComponent, canActivate:[ StudentGuard ], data: { titulo: 'Calificaciones' } },
 ];
