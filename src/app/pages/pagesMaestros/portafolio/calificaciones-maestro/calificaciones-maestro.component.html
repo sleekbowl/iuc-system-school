@@ -1,0 +1,72 @@
+<div class="row animated fadeIn">
+
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Calificaciones</h3>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form>
+                        <div class="form-group">
+                            <label>Buscar Grupo:</label>
+                            <div class="input-group mb-3">
+                                <input [(ngModel)]="grupoSelec" [disabled]="inputGrupo" #grupo (keyup)="buscarGrupo( grupo.value )" name="grupo" type="text" class="form-control" placeholder="Grupo.." required>
+                                <div *ngIf="inputGrupo" class="input-group-append">
+                                    <span class="input-group-text">
+                                          <button (click)="borrarGrupo()" type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                                      <i class="mdi mdi-delete-forever"></i>
+                                      </button>
+                                  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Guardar
+                      </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card card-body pointer" data-toggle="modal" data-target="#modalAlumnos">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Grupos:</h3>
+                    <div class="row col-md-12 text-center">
+                        <div *ngIf="busqueda">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Carrera</th>
+                                        <th scope="col">Año</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let grupo of grupos; let i = index" (click)="seleccionarGrupo(i)">
+                                        <th>{{ grupo.nombre }}</th>
+                                        <td>{{ grupo.tipo }}</td>
+                                        <td>{{ grupo.carrera.nombre }}</td>
+                                        <td>{{ grupo.year }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div *ngIf="!busqueda && !busquedaSS">
+                        <h3 class="box-title m-b-0 alert alert-warning">Busque un Grupo</h3>
+                    </div>
+                    <div *ngIf="busquedaSS">
+                        <h3 class="box-title m-b-0 alert alert-warning">{{ grupoSelec }} Seleccionado</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

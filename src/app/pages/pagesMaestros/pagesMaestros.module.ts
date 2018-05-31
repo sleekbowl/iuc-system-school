@@ -18,6 +18,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 //Paginas
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { PAGES_ROUTES } from './pagesMaestros.routs';
+import { CalificacionesMaestroComponent } from './portafolio/calificaciones-maestro/calificaciones-maestro.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -30,7 +31,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     declarations: [
         // Componentes,
         
-    DashboardComponent],
+    DashboardComponent,
+        CalificacionesMaestroComponent
+    ],
     exports: [
         
     ],

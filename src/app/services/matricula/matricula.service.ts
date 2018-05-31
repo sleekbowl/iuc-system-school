@@ -9,6 +9,9 @@ import swal from 'sweetalert';
 @Injectable()
 export class MatriculaService {
 
+  alumnos(arg0: any): any {
+    throw new Error("Method not implemented.");
+  }
   totalMatriculas: number = 0;
 
   constructor(
