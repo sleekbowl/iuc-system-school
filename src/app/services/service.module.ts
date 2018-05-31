@@ -20,7 +20,9 @@ import {
   GrupoService,
   ChatService,
   StudentGuard,
-  TeacherGuard
+  TeacherGuard,
+  MateriaService,
+  CalificacionService
  } from './service.index';
 
 
@@ -46,7 +48,9 @@ import {
     GrupoService,
     ChatService,
     StudentGuard,
-    TeacherGuard
+    TeacherGuard,
+    MateriaService,
+    CalificacionService
   ],
   declarations: []
 })
