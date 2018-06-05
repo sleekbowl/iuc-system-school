@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PieGridComponent } from '@swimlane/ngx-charts';
 import { MatriculaService } from '../../services/matricula/matricula.service';
+import { MatriculasComponent } from '../matriculas/matriculas.component';
 
 
 @Component({
@@ -8,11 +9,7 @@ import { MatriculaService } from '../../services/matricula/matricula.service';
   templateUrl: './dashboard.component.html',
   styles: []
 })
-export class DashboardComponent implements OnInit{
-  
-  desde: number = 0;
-  totalRegistros: number = 0;
-  nothing:boolean = true;
+export class DashboardComponent implements OnInit {
 
   single = [
     {
@@ -54,9 +51,18 @@ export class DashboardComponent implements OnInit{
   // line, area
   autoScale = true;
 
+  desde: number = 0;
+  totalRegistros: number = 0;
+  nothing:boolean = true;
+
+  intAlumno: number = 0;
+  intMaestro: number = 0;
+  intAdmin: number = 0;
+
   constructor(
-    public _matriculasService: MatriculaService
+    public _matriculaService: MatriculaService
   ) {
+    this.cargarEscuela();
   }
 
   ngOnInit() {
@@ -67,26 +73,23 @@ export class DashboardComponent implements OnInit{
     console.log(event);
   }
 
-  alumnos( ) {
-
-    this._matriculasService.buscarMatricula( this.desde )
-              .subscribe( (resp: any) => {
-                this.totalRegistros = resp.total;
-                if( this.totalRegistros === 0 ){
-                  this.nothing = true;
-                }else{
-                  this.nothing = false;
-                }
-              });
-
-  }
-
-  profesores(){
-
-  }
-
-  administrativos(){
-
+  cargarEscuela() {
+    this._matriculaService.cargarMatriculas().subscribe(data => {
+      for (let index = 0; index < data.length; index++) {
+        if ( data[index].tipo === 'Administrativo') {
+          this.intAdmin++;
+        }
+        if ( data[index].tipo === 'Maestro') {
+          this.intMaestro++;
+        }
+        if ( data[index].tipo === 'Alumno') {
+          this.intAlumno++;
+        }
+      }
+      console.log(this.intAdmin);
+      console.log(this.intAlumno);
+      console.log(this.intMaestro);
+    });
   }
 
 }
